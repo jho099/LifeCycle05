@@ -1,4 +1,12 @@
 <resources>
     <string name="app_name">LifeCycle05</string>
     <string name="set1">Set 1 Count</string>
+    <string name="destroy">Destroy --</string>
+    <string name="restart">Restart --</string>
+    <string name="stop">Stop --</string>
+    <string name="pause">Pause --</string>
+    <string name="resume">Resume --</string>
+    <string name="start">Start --</string>
+    <string name="create">Create --</string>
+    <string name="set2">Set 2 Count</string>
 </resources>
