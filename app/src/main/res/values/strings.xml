@@ -9,4 +9,5 @@
     <string name="start">Start --</string>
     <string name="create">Create --</string>
     <string name="set2">Set 2 Count</string>
+    <string name="reset">Reset</string>
 </resources>

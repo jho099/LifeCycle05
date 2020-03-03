@@ -2,10 +2,12 @@ package com.example.lifecycle05;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.annotation.SuppressLint;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
 import android.util.Log;
+import android.view.View;
 import android.widget.TextView;
 
 public class MainActivity extends AppCompatActivity {
@@ -54,24 +56,29 @@ public class MainActivity extends AppCompatActivity {
 
         counter.setCreate((counter.getCreate())+1);
         editor = sharedPrefs.edit();
+        int count = counter.getCreate();
         int current = sharedPrefs.getInt("create", 0);
         Log.i("create current", String.valueOf(current));
         editor.putInt("create", current+1);
         editor.apply();
         createTV2.setText("Create -- " + (current+1));
+        createTV1.setText("Create -- " + count);
         //----------------------------------------------------------
 
         counter.setDestroy(counter.getDestroy()+1);
         editor = sharedPrefs.edit();
         //int destroyCount = counter.getDestroy();
         int destroyCurrent = sharedPrefs.getInt("destroy", 0);
-        editor.putInt("destroy", 1+current);
+        editor.putInt("destroy", current+1);
         editor.apply();
         destroyTV2.setText("Destroy -- " + (1+destroyCurrent));
 
         pauseTV2.setText("Pause -- " + sharedPrefs.getInt("pause", 0));
         stopTV2.setText("Stop -- " + sharedPrefs.getInt("stop", 0));
         restartTV2.setText("Restart -- " + sharedPrefs.getInt("restart", 0));
+
+        //------------------SET 1 COUNT------------------
+
     }
     @Override
     protected void onStart() {
@@ -84,6 +91,7 @@ public class MainActivity extends AppCompatActivity {
         editor.putInt("start", current+1);
         editor.apply();
         startTV2.setText("Start -- " + (current+1));
+        startTV1.setText("Start -- " + count);
 
     }
     @Override
@@ -98,6 +106,7 @@ public class MainActivity extends AppCompatActivity {
         editor.putInt("resume", 1+current);
         editor.apply();
         resumeTV2.setText("Resume -- " + (current+1));
+        resumeTV1.setText("Resume -- " + count);
     }
     @Override
     protected void onPause() {
@@ -111,6 +120,7 @@ public class MainActivity extends AppCompatActivity {
         editor.putInt("pause", 1+current);
         editor.apply();
         pauseTV2.setText("Pause -- " + (current+1));
+        pauseTV1.setText("Pause -- " + count);
     }
     @Override
     protected void onStop() {
@@ -123,6 +133,7 @@ public class MainActivity extends AppCompatActivity {
         editor.putInt("stop", 1+current);
         editor.apply();
         stopTV2.setText("Stop -- " + (current+1));
+        stopTV1.setText("Stop -- " + count);
     }
     @Override
     protected void onRestart() {
@@ -136,6 +147,7 @@ public class MainActivity extends AppCompatActivity {
         editor.putInt("restart", 1+current);
         editor.apply();
         restartTV2.setText("Restart -- " + (current+1));
+        restartTV1.setText("Restart -- " + count);
     }
     @Override
     protected void onDestroy() {
@@ -144,6 +156,32 @@ public class MainActivity extends AppCompatActivity {
     }
 
 
+
+    public void reset(View view) {
+        editor = sharedPrefs.edit();
+        editor.putInt("create", 0);
+        editor.putInt("start", 0);
+        editor.putInt("resume", 0);
+        editor.putInt("pause", 0);
+        editor.putInt("stop", 0);
+        editor.putInt("restart", 0);
+        editor.putInt("destroy", 0);
+        editor.apply();
+        createTV2.setText("Create -- ");
+        startTV2.setText("Start -- ");
+        resumeTV2.setText("Resume -- ");
+        pauseTV2.setText("Pause -- ");
+        stopTV2.setText("Stop -- ");
+        restartTV2.setText("Restart -- ");
+        destroyTV2.setText("Destroy -- ");
+        counter = new LCCounter(0, 0, 0, 0, 0, 0, 0);
+        createTV1.setText("Create -- ");
+        startTV1.setText("Start -- ");
+        resumeTV1.setText("Resume -- ");
+        pauseTV1.setText("Pause -- ");
+        stopTV1.setText("Stop -- ");
+        destroyTV1.setText("Destroy -- ");
+    }
 }
 class LCCounter{
     private int create;
