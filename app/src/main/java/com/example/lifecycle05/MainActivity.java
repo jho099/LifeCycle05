@@ -2,7 +2,6 @@ package com.example.lifecycle05;
 
 import androidx.appcompat.app.AppCompatActivity;
 
-import android.annotation.SuppressLint;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
@@ -52,8 +51,8 @@ public class MainActivity extends AppCompatActivity {
         destroyTV2 = findViewById(R.id.destroy2);
 
         sharedPrefs = PreferenceManager.getDefaultSharedPreferences(getApplicationContext());
-        counter = new LCCounter(0, 0, 0, 0, 0, 0 , 0);
-
+         counter = new LCCounter(0, 0, 0, 0, 0, 0 , 0);
+        //Log.i("getCreate BEFORE", String.valueOf(counter.getCreate()));
         counter.setCreate((counter.getCreate())+1);
         editor = sharedPrefs.edit();
         int count = counter.getCreate();
@@ -65,20 +64,17 @@ public class MainActivity extends AppCompatActivity {
         createTV1.setText("Create -- " + count);
         //----------------------------------------------------------
 
-        counter.setDestroy(counter.getDestroy()+1);
-        editor = sharedPrefs.edit();
-        //int destroyCount = counter.getDestroy();
-        int destroyCurrent = sharedPrefs.getInt("destroy", 0);
-        editor.putInt("destroy", current+1);
-        editor.apply();
-        destroyTV2.setText("Destroy -- " + (1+destroyCurrent));
+        destroyTV2.setText("Destroy -- " + (sharedPrefs.getInt("destroy", 0)));
 
         pauseTV2.setText("Pause -- " + sharedPrefs.getInt("pause", 0));
         stopTV2.setText("Stop -- " + sharedPrefs.getInt("stop", 0));
         restartTV2.setText("Restart -- " + sharedPrefs.getInt("restart", 0));
 
         //------------------SET 1 COUNT------------------
-
+     restartTV1.setText("Restart -- " + counter.getRestart());
+     stopTV1.setText("Stop -- " + counter.getStop());
+     pauseTV1.setText("Pause -- " + counter.getPause());
+     //destroyTV1.setText("Destroy -- " + counter.getDestroy());
     }
     @Override
     protected void onStart() {
@@ -152,7 +148,14 @@ public class MainActivity extends AppCompatActivity {
     @Override
     protected void onDestroy() {
         super.onDestroy();
-
+        counter.setDestroy(counter.getDestroy()+1);
+        int count = counter.getDestroy();
+        Log.i("getDestroy", String.valueOf(count));
+        editor = sharedPrefs.edit();
+        int destroyCurrent = sharedPrefs.getInt("destroy", 0);
+        editor.putInt("destroy", destroyCurrent+1);
+        editor.apply();
+        destroyTV1.setText("Destroy -- " + count);
     }
 
 
